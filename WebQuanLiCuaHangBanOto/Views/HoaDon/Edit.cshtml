@@ -1,0 +1,64 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.Hoadon
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+<h4>Hoadon</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Idhd" class="control-label"></label>
+                <input asp-for="Idhd" class="form-control" />
+                <span asp-validation-for="Idhd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idkh" class="control-label"></label>
+                <input asp-for="Idkh" class="form-control" />
+                <span asp-validation-for="Idkh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idnv" class="control-label"></label>
+                <input asp-for="Idnv" class="form-control" />
+                <span asp-validation-for="Idnv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayMua" class="control-label"></label>
+                <input asp-for="NgayMua" class="form-control" />
+                <span asp-validation-for="NgayMua" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThanhTien" class="control-label"></label>
+                <input asp-for="ThanhTien" class="form-control" />
+                <span asp-validation-for="ThanhTien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuong" class="control-label"></label>
+                <input asp-for="SoLuong" class="form-control" />
+                <span asp-validation-for="SoLuong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="DocBangHoaDon">Back to List</a>
+</div>
+
+</body>
+</html>

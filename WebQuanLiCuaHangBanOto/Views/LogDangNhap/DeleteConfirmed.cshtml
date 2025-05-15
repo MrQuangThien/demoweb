@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebQuanLiCuaHangBanOto.Models.LogDangnhap>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeleteConfirmed</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Idlog)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idtk)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThoiGian)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThanhCong)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idlog)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idtk)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThoiGian)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThanhCong)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Idlog}) |
+                @Html.ActionLink("Details", "Details", new {id=item.Idlog}) |
+                @Html.ActionLink("Delete", "Delete", new {id=item.Idlog })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

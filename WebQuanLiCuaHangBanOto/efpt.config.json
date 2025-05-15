@@ -1,0 +1,93 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "QLCHOTOContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "WebQuanLiCuaHangBanOto",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[BAOHANH]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CHITIETDONHANG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Dangnhap]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DANHGIA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HOADON]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LOG_DANGNHAP]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NHANVIEN]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SANPHAM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TAIKHOAN]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ThongBao]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[THONGKE_SLBAN]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[THONGTIN]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false
+}

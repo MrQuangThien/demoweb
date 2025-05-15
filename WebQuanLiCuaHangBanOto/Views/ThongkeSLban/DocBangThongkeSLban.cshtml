@@ -1,0 +1,108 @@
+﻿@model IEnumerable<WebQuanLiCuaHangBanOto.Models.ThongkeSlban>
+
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Trang quản trị";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DocBangThongkeSLban</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 20px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            .table thead {
+                background-color: #343a40;
+                color: white;
+            }
+
+            .table th, .table td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #dee2e6;
+            }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .table tbody tr:hover {
+                background-color: #e2e6ea;
+            }
+
+        p a {
+            font-weight: bold;
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+            p a:hover {
+                background-color: #218838;
+            }
+    </style>
+</head>
+<body>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Idsp)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoLuongBan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ThoiGian)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Idsp)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoLuongBan)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ThoiGian)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Idsp }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Idsp }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Idsp })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

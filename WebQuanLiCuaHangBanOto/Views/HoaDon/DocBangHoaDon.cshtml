@@ -1,0 +1,112 @@
+﻿@model IEnumerable<WebQuanLiCuaHangBanOto.Models.Hoadon>
+
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Trang quản trị";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Danh sách hóa đơn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .actions a {
+            margin-right: 8px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .actions a:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+
+    <h2>Danh sách hóa đơn</h2>
+
+    <p>
+        <a class="btn" asp-action="Create">+ Tạo mới</a>
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Idhd)</th>
+                <th>@Html.DisplayNameFor(model => model.Idkh)</th>
+                <th>@Html.DisplayNameFor(model => model.Idnv)</th>
+                <th>@Html.DisplayNameFor(model => model.NgayMua)</th>
+                <th>@Html.DisplayNameFor(model => model.ThanhTien)</th>
+                <th>@Html.DisplayNameFor(model => model.SoLuong)</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Idhd)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Idkh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Idnv)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NgayMua)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ThanhTien)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                    <td class="actions">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.Idhd }) |
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.Idhd }) |
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.Idhd })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

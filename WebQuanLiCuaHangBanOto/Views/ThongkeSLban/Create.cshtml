@@ -1,0 +1,47 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.ThongkeSlban
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-4">
+
+    <h4 class="text-center">Thêm Mới Thống Kê Số Lượng Bán</h4>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="Idsp" class="form-label"></label>
+                    <input asp-for="Idsp" class="form-control" />
+                    <span asp-validation-for="Idsp" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="SoLuongBan" class="form-label"></label>
+                    <input asp-for="SoLuongBan" class="form-control" />
+                    <span asp-validation-for="SoLuongBan" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ThoiGian" class="form-label"></label>
+                    <input asp-for="ThoiGian" type="date" class="form-control" />
+                    <span asp-validation-for="ThoiGian" class="text-danger"></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <input type="submit" value="Thêm Mới" class="btn btn-primary" />
+                    <a asp-action="DocbangThongKeSLban" class="btn btn-secondary">Quay Lại</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

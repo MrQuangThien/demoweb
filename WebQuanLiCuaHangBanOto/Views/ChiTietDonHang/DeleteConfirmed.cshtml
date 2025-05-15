@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebQuanLiCuaHangBanOto.Models.Chitietdonhang>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeleteConfirmed</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Idctdh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idhd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idsp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThanhTien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuong)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idctdh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idhd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idsp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThanhTien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Idctdh }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Idctdh }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Idctdh})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

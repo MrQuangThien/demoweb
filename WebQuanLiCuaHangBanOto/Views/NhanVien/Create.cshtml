@@ -1,0 +1,125 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.Nhanvien
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        form {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input.form-control {
+            width: auto;
+            max-width: 250px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+            input.form-control:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+            .btn-secondary:hover {
+                background-color: #545b62;
+            }
+    </style>
+</head>
+<body>
+
+    <h4>Tạo nhân viên</h4>
+    <hr />
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Idnv"></label>
+            <input asp-for="Idnv" class="form-control" />
+            <span asp-validation-for="Idnv" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="HoTen"></label>
+            <input asp-for="HoTen" class="form-control" />
+            <span asp-validation-for="HoTen" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Sdt"></label>
+            <input asp-for="Sdt" class="form-control" />
+            <span asp-validation-for="Sdt" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Gmail"></label>
+            <input asp-for="Gmail" class="form-control" />
+            <span asp-validation-for="Gmail" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ChucVu"></label>
+            <input asp-for="ChucVu" class="form-control" />
+            <span asp-validation-for="ChucVu" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Tạo" class="btn btn-primary" />
+            <a asp-action="DocBangNhanVien" class="btn btn-secondary">⬅ Quay lại</a>
+        </div>
+    </form>
+
+</body>
+</html>

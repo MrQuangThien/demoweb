@@ -1,0 +1,120 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.LogDangnhap
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Xóa bản ghi đăng nhập</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 700px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        h3 {
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: #343a40;
+            margin-bottom: 25px;
+        }
+
+        dl.row {
+            margin: 0;
+        }
+
+        dt {
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        dd {
+            margin-bottom: 15px;
+            color: #212529;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+            }
+
+        a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 6px;
+            background-color: #6c757d;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+            a:hover {
+                background-color: #5a6268;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Bạn có chắc chắn muốn xóa bản ghi đăng nhập này không?</h3>
+        <div>
+            <h4>Chi tiết đăng nhập</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Idlog)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Idlog)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Idtk)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Idtk)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ThoiGian)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.ThoiGian)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Ip)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Ip)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ThanhCong)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.ThanhCong)</dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="submit" value="Xóa" class="btn btn-danger" />
+                <a asp-action="DocBangLogDangNhap">Quay lại</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

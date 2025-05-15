@@ -1,0 +1,133 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.Thongtin
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thêm Thông Tin Khách Hàng</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding-top: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h4 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 6px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h4>Thêm Thông Tin Khách Hàng</h4>
+        <hr />
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Idkh" class="form-label">Mã Khách Hàng</label>
+                <input asp-for="Idkh" class="form-control" placeholder="Nhập mã khách hàng" required />
+                <span asp-validation-for="Idkh" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="HoTen" class="form-label">Họ Tên</label>
+                <input asp-for="HoTen" class="form-control" placeholder="Nhập họ tên" required />
+                <span asp-validation-for="HoTen" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="NgaySinh" class="form-label">Ngày Sinh</label>
+                <input asp-for="NgaySinh" type="date" class="form-control" required />
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="GioiTinh" class="form-label">Giới Tính</label>
+                <select asp-for="GioiTinh" class="form-control">
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Khác">Khác</option>
+                </select>
+                <span asp-validation-for="GioiTinh" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Sdt" class="form-label">Số Điện Thoại</label>
+                <input asp-for="Sdt" type="tel" class="form-control" pattern="0[0-9]{9}" required
+                       placeholder="Nhập số điện thoại"
+                       title="Số điện thoại phải có 10 chữ số và bắt đầu bằng 0" />
+                <span asp-validation-for="Sdt" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DiaChi" class="form-label">Địa Chỉ</label>
+                <input asp-for="DiaChi" class="form-control" placeholder="Nhập địa chỉ" required />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Gmail" class="form-label">Email</label>
+                <input asp-for="Gmail" type="email" class="form-control" placeholder="Nhập email" required />
+                <span asp-validation-for="Gmail" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Thêm Mới" class="btn btn-primary" />
+                <a asp-action="DocBangThongtin" class="btn btn-secondary">Trở về danh sách</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

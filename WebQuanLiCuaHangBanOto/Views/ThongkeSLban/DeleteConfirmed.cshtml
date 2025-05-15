@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebQuanLiCuaHangBanOto.Models.ThongkeSlban>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeleteConfirmed</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Idsp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuongBan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThoiGian)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idsp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuongBan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThoiGian)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Idsp}) |
+                @Html.ActionLink("Details", "Details", new { id=item.Idsp }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Idsp })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

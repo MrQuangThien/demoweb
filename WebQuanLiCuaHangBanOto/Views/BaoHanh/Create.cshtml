@@ -1,0 +1,144 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.Baohanh
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create Baohanh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+            .container h4 {
+                color: #495057;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+            .form-group label {
+                font-weight: bold;
+                color: #495057;
+            }
+
+            .form-group input {
+                font-size: 1rem;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #ced4da;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+                .form-group input:focus {
+                    border-color: #80bdff;
+                    outline: none;
+                }
+
+            .form-group span {
+                color: #dc3545;
+                font-size: 0.875rem;
+            }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .text-center {
+            margin-top: 30px;
+        }
+
+        .d-flex {
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .d-flex .btn {
+                margin-top: 10px;
+            }
+
+        .btn-back {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .btn-back:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h4 class="text-center">Thêm Bảo Hành</h4>
+        <hr />
+
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Idbh" class="control-label">Mã Bảo Hành</label>
+                <input asp-for="Idbh" class="form-control" />
+                <span asp-validation-for="Idbh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idsp" class="control-label">Mã Sản Phẩm</label>
+                <input asp-for="Idsp" class="form-control" />
+                <span asp-validation-for="Idsp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayMua" class="control-label">Ngày Mua</label>
+                <input asp-for="NgayMua" class="form-control" type="date" />
+                <span asp-validation-for="NgayMua" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayHhbh" class="control-label">Ngày Hết Hạn Bảo Hành</label>
+                <input asp-for="NgayHhbh" class="form-control" type="date" />
+                <span asp-validation-for="NgayHhbh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoiDung" class="control-label">Nội Dung</label>
+                <input asp-for="NoiDung" class="form-control" />
+                <span asp-validation-for="NoiDung" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <div class="text-center">
+            <a asp-action="DocBangBaoHanh" class="btn-back">Back to List</a>
+        </div>
+    </div>
+
+</body>
+</html>

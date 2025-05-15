@@ -1,0 +1,76 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.Danhgia
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-back {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h4 class="text-center">Thêm Đánh Giá</h4>
+        <hr />
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Iddg" class="form-label"></label>
+                <input asp-for="Iddg" class="form-control" />
+                <span asp-validation-for="Iddg" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Idkh" class="form-label"></label>
+                <input asp-for="Idkh" class="form-control" />
+                <span asp-validation-for="Idkh" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Idsp" class="form-label"></label>
+                <input asp-for="Idsp" class="form-control" />
+                <span asp-validation-for="Idsp" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ThangDiem" class="form-label"></label>
+                <input asp-for="ThangDiem" type="number" min="1" max="5" class="form-control" />
+                <span asp-validation-for="ThangDiem" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FeedBack" class="form-label"></label>
+                <textarea asp-for="FeedBack" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="FeedBack" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="NgayFb" class="form-label"></label>
+                <input asp-for="NgayFb" type="date" class="form-control" />
+                <span asp-validation-for="NgayFb" class="text-danger"></span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+                <a asp-action="DocBangDanhGia" class="btn btn-secondary btn-back">Quay lại</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

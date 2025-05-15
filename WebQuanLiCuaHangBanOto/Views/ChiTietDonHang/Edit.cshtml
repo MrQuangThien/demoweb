@@ -1,0 +1,157 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.Chitietdonhang
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Chi Tiết Đơn Hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+            .container h4 {
+                color: #495057;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+        .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+        .btn-back {
+            margin-top: 10px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+        }
+
+            .form-control:focus {
+                border-color: #80bdff;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+            }
+
+        .text-danger {
+            font-size: 0.875rem;
+            color: #dc3545;
+        }
+
+        .d-flex {
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .d-flex .btn {
+                margin-top: 10px;
+            }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h4 class="text-center">Chỉnh Sửa Chi Tiết Đơn Hàng</h4>
+        <hr />
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Idctdh" class="form-label"></label>
+                <input asp-for="Idctdh" class="form-control" />
+                <span asp-validation-for="Idctdh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idhd" class="form-label"></label>
+                <input asp-for="Idhd" class="form-control" />
+                <span asp-validation-for="Idhd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idsp" class="form-label"></label>
+                <input asp-for="Idsp" class="form-control" />
+                <span asp-validation-for="Idsp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DonGia" class="form-label"></label>
+                <input asp-for="DonGia" class="form-control" />
+                <span asp-validation-for="DonGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThanhTien" class="form-label"></label>
+                <input asp-for="ThanhTien" class="form-control" />
+                <span asp-validation-for="ThanhTien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuong" class="form-label"></label>
+                <input asp-for="SoLuong" class="form-control" />
+                <span asp-validation-for="SoLuong" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="text-center mt-3">
+        <a asp-action="DocBangChiTietDonHang" class="btn btn-secondary btn-back">Back to List</a>
+    </div>
+
+</body>
+</html>
