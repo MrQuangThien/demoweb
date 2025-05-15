@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebQuanLiCuaHangBanOto.Models;
-
+namespace WebQuanLiCuaHangBanOto.Models;
 public partial class Sanpham
 {
     public Sanpham()
@@ -13,7 +15,7 @@ public partial class Sanpham
         Danhgia = new HashSet<Danhgia>();
         ThongkeSlbans = new HashSet<ThongkeSlban>();
     }
-
+    
     public int Idsp { get; set; }
     public string TenSp { get; set; }
     public string HangXe { get; set; }

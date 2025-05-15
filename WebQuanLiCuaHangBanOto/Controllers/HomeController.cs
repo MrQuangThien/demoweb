@@ -17,7 +17,30 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         {
             return View(viewadmin);
         }
-
+        public IActionResult viewindex()
+        {
+            return View(viewindex);
+        }
+        public IActionResult viewcontact()
+        {
+            return View(viewcontact);
+        }
+        public IActionResult viewblox()
+        {
+            return View(viewblox);
+        }
+        public IActionResult viewshop()
+        {
+            return View(viewshop);
+        }
+        public IActionResult viewlogdetal()
+        {
+            return View(viewlogdetal);
+        }
+        public IActionResult viewcheckout()
+        {
+            return View(viewcheckout);
+        }
         public IActionResult Privacy()
         {
             return View();
