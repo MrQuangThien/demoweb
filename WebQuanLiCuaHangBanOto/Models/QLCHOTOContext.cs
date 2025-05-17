@@ -156,13 +156,19 @@ public partial class QLCHOTOContext : DbContext
 
         modelBuilder.Entity<LogDangnhap>(entity =>
         {
-            entity.HasKey(e => e.Idlog).HasName("PK__LOG_DANG__95D0020876375A16");
+            //entity.HasKey(e => e.Idlog).HasName("PK__LOG_DANG__95D0020876375A16");
 
+            //entity.ToTable("LOG_DANGNHAP");
+
+            //entity.Property(e => e.Idlog)
+            //    .ValueGeneratedNever()
+            //    .HasColumnName("IDLog");
+            entity.HasKey(e => e.Idlog);
             entity.ToTable("LOG_DANGNHAP");
 
-            entity.Property(e => e.Idlog)
-                .ValueGeneratedNever()
-                .HasColumnName("IDLog");
+            entity.Property(e => e.Idlog)                    // <-- thay đổi
+                  .ValueGeneratedOnAdd()                     // tự tăng
+                  .HasColumnName("IDLog");
             entity.Property(e => e.Idtk).HasColumnName("IDTK");
             entity.Property(e => e.Ip)
                 .HasMaxLength(50)
@@ -215,14 +221,20 @@ public partial class QLCHOTOContext : DbContext
 
         modelBuilder.Entity<Taikhoan>(entity =>
         {
-            entity.HasKey(e => e.Idtk).HasName("PK__TAIKHOAN__B87C3A839D2944D6");
+        //    entity.HasKey(e => e.Idtk).HasName("PK__TAIKHOAN__B87C3A839D2944D6");
 
-            entity.ToTable("TAIKHOAN");
+        //    entity.ToTable("TAIKHOAN");
 
-            entity.Property(e => e.Idtk)
-                .ValueGeneratedNever()
-                .HasColumnName("IDTK");
-            entity.Property(e => e.Gmail).HasMaxLength(100);
+        //    entity.Property(e => e.Idtk)
+        //        .ValueGeneratedNever()
+        //        .HasColumnName("IDTK");
+             entity.HasKey(e => e.Idtk);
+        entity.ToTable("TAIKHOAN");
+
+        entity.Property(e => e.Idtk)                     // <-- thay đổi
+              .ValueGeneratedOnAdd()                     // tự tăng
+              .HasColumnName("IDTK");
+        entity.Property(e => e.Gmail).HasMaxLength(100);
             entity.Property(e => e.Idkh).HasColumnName("IDKH");
             entity.Property(e => e.MatKhau)
                 .IsRequired()
@@ -290,13 +302,18 @@ public partial class QLCHOTOContext : DbContext
 
         modelBuilder.Entity<Thongtin>(entity =>
         {
-            entity.HasKey(e => e.Idkh).HasName("PK__THONGTIN__B87DC1A787116926");
+            //entity.HasKey(e => e.Idkh);
+            //    entity.ToTable("THONGTIN");
 
+            //    entity.Property(e => e.Idkh)                     // <-- thay đổi
+            //          .ValueGeneratedOnAdd()                     // tự tăng
+            //          .HasColumnName("IDKH");
+            entity.HasKey(e => e.Idkh);
             entity.ToTable("THONGTIN");
 
-            entity.Property(e => e.Idkh)
-                .ValueGeneratedNever()
-                .HasColumnName("IDKH");
+            entity.Property(e => e.Idkh)                     // <-- thay đổi
+                  .ValueGeneratedOnAdd()                     // tự tăng
+                  .HasColumnName("IDKH");
             entity.Property(e => e.DiaChi).HasMaxLength(100);
             entity.Property(e => e.GioiTinh)
                 .HasMaxLength(3)

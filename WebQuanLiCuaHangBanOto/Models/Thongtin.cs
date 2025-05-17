@@ -2,12 +2,17 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebQuanLiCuaHangBanOto.Models;
 
 public partial class Thongtin
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Idkh { get; set; }
+
 
     public string HoTen { get; set; }
 
