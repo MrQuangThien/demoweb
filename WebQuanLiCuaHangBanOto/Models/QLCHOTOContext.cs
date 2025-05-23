@@ -17,7 +17,7 @@ public partial class QLCHOTOContext : DbContext
 
     public virtual DbSet<Chitietdonhang> Chitietdonhangs { get; set; }
 
-    public virtual DbSet<Dangnhap> Dangnhaps { get; set; }
+
 
     public virtual DbSet<Danhgia> Danhgia { get; set; }
 
@@ -46,8 +46,9 @@ public partial class QLCHOTOContext : DbContext
             entity.ToTable("BAOHANH");
 
             entity.Property(e => e.Idbh)
-                .ValueGeneratedNever()
-                .HasColumnName("IDBH");
+    .ValueGeneratedOnAdd() // ✅ sửa từ ValueGeneratedNever
+    .HasColumnName("IDBH");
+
             entity.Property(e => e.Idsp).HasColumnName("IDSP");
             entity.Property(e => e.NgayHhbh)
                 .HasColumnType("datetime")
@@ -68,7 +69,7 @@ public partial class QLCHOTOContext : DbContext
             entity.ToTable("CHITIETDONHANG");
 
             entity.Property(e => e.Idctdh)
-                .ValueGeneratedNever()
+                   .ValueGeneratedOnAdd()
                 .HasColumnName("IDCTDH");
             entity.Property(e => e.DonGia).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Idhd).HasColumnName("IDHD");
@@ -86,22 +87,7 @@ public partial class QLCHOTOContext : DbContext
                 .HasConstraintName("FK__CHITIETDON__IDSP__4316F928");
         });
 
-        modelBuilder.Entity<Dangnhap>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Dangnhap__3214EC0744331A16");
-
-            entity.ToTable("Dangnhap");
-
-            entity.HasIndex(e => e.Username, "UQ_Dangnhap_Username").IsUnique();
-
-            entity.Property(e => e.Password)
-                .IsRequired()
-                .HasMaxLength(100);
-            entity.Property(e => e.Username)
-                .IsRequired()
-                .HasMaxLength(100);
-        });
-
+   
         modelBuilder.Entity<Danhgia>(entity =>
         {
             entity.HasKey(e => e.Iddg).HasName("PK__DANHGIA__B87DB89BAA82AE31");
@@ -109,7 +95,7 @@ public partial class QLCHOTOContext : DbContext
             entity.ToTable("DANHGIA");
 
             entity.Property(e => e.Iddg)
-                .ValueGeneratedNever()
+                   .ValueGeneratedOnAdd()
                 .HasColumnName("IDDG");
             entity.Property(e => e.FeedBack).HasMaxLength(1000);
             entity.Property(e => e.Idkh).HasColumnName("IDKH");
@@ -136,7 +122,7 @@ public partial class QLCHOTOContext : DbContext
             entity.ToTable("HOADON");
 
             entity.Property(e => e.Idhd)
-                .ValueGeneratedNever()
+                   .ValueGeneratedOnAdd()
                 .HasColumnName("IDHD");
             entity.Property(e => e.Idkh).HasColumnName("IDKH");
             entity.Property(e => e.Idnv).HasColumnName("IDNV");
@@ -188,7 +174,7 @@ public partial class QLCHOTOContext : DbContext
             entity.ToTable("NHANVIEN");
 
             entity.Property(e => e.Idnv)
-                .ValueGeneratedNever()
+                   .ValueGeneratedOnAdd()
                 .HasColumnName("IDNV");
             entity.Property(e => e.ChucVu).HasMaxLength(1000);
             entity.Property(e => e.Gmail).HasMaxLength(100);
@@ -207,7 +193,7 @@ public partial class QLCHOTOContext : DbContext
             entity.ToTable("SANPHAM");
 
             entity.Property(e => e.Idsp)
-                .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                 .HasColumnName("IDSP");
             entity.Property(e => e.GiaBan).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.HangXe).HasMaxLength(20);
@@ -261,7 +247,7 @@ public partial class QLCHOTOContext : DbContext
             entity.ToTable("ThongBao");
 
             entity.Property(e => e.Idtb)
-                .ValueGeneratedNever()
+                  .ValueGeneratedOnAdd()
                 .HasColumnName("IDTB");
             entity.Property(e => e.Idkh).HasColumnName("IDKH");
             entity.Property(e => e.Idnv).HasColumnName("IDNV");

@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<WebQuanLiCuaHangBanOto.Models.Sanpham>
 
 @{
-    ViewData["Title"] = "Đọc bảng sản phẩm";    
+    ViewData["Title"] = "Đọc bảng sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <style>
     table.table {
         width: 100%;
@@ -47,7 +48,7 @@
             text-decoration: underline;
             color: #0056b3;
         }
-    /* Thêm style cho ảnh thumbnail */
+
     img.thumbnail {
         width: 100px;
         height: auto;
@@ -56,40 +57,41 @@
     }
 </style>
 
-<h1>Đọc bảng sản phẩm</h1>
+<h1>Danh sách sản phẩm</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Thêm sản phẩm</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Idsp)</th>
-            <th>@Html.DisplayNameFor(model => model.TenSp)</th>
-            <th>@Html.DisplayNameFor(model => model.HangXe)</th>
-            <th>@Html.DisplayNameFor(model => model.LoaiXe)</th>
-            <th>@Html.DisplayNameFor(model => model.GiaBan)</th>
-            <th>@Html.DisplayNameFor(model => model.NgaySanXuat)</th>
-            <th>@Html.DisplayNameFor(model => model.SoLuong)</th>
-            <th>Hình ảnh</th> <!-- Thay vì hiện cột HinhAnhBase64 text -->
-            <th></th>
+            <th>Mã SP</th>
+            <th>Tên SP</th>
+            <th>Hãng</th>
+            <th>Loại</th>
+            <th>Giá bán</th>
+            <th>Ngày SX</th>
+            <th>Số lượng</th>
+            <th>Hình ảnh</th>
+            <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Idsp)</td>
-                <td>@Html.DisplayFor(modelItem => item.TenSp)</td>
-                <td>@Html.DisplayFor(modelItem => item.HangXe)</td>
-                <td>@Html.DisplayFor(modelItem => item.LoaiXe)</td>
-                <td>@Html.DisplayFor(modelItem => item.GiaBan)</td>
-                <td>@Html.DisplayFor(modelItem => item.NgaySanXuat)</td>
-                <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                <td>@item.Idsp</td>
+                <td>@item.TenSp</td>
+                <td>@item.HangXe</td>
+                <td>@item.LoaiXe</td>
+                <td>@item.GiaBan.ToString("N0")</td>
+                <td>@item.NgaySanXuat?.ToString("dd/MM/yyyy")</td>
+                <td>@item.SoLuong</td>
                 <td>
                     @if (!string.IsNullOrEmpty(item.HinhAnhBase64))
                     {
-                        <img src="@item.HinhAnhBase64" alt="Hình sản phẩm" class="thumbnail" />
+                        <img src="@item.HinhAnhBase64" alt="Ảnh sản phẩm" class="thumbnail" />
                     }
                     else
                     {
@@ -97,9 +99,9 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Idsp }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Idsp }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Idsp })
+                    <a asp-action="Edit" asp-route-id="@item.Idsp">Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.Idsp">Chi tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Idsp">Xóa</a>
                 </td>
             </tr>
         }

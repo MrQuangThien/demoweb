@@ -72,11 +72,11 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="mb-3">
-                <label asp-for="Idkh" class="form-label">Mã Khách Hàng</label>
-                <input asp-for="Idkh" class="form-control" placeholder="Nhập mã khách hàng" required />
-                <span asp-validation-for="Idkh" class="text-danger"></span>
-            </div>
+            @* <div class="mb-3"> *@
+            @*     <label asp-for="Idkh" class="form-label">Mã Khách Hàng</label> *@
+            @*     <input asp-for="Idkh" class="form-control" placeholder="Nhập mã khách hàng" required /> *@
+            @*     <span asp-validation-for="Idkh" class="text-danger"></span> *@
+            @* </div> *@
 
             <div class="mb-3">
                 <label asp-for="HoTen" class="form-label">Họ Tên</label>
@@ -94,7 +94,7 @@
                 <label asp-for="GioiTinh" class="form-label">Giới Tính</label>
                 <select asp-for="GioiTinh" class="form-control">
                     <option value="Nam">Nam</option>
-                    <option value="Nữ">Nữ</option>
+                    <option value="Nu">Nữ</option>
                     <option value="Khác">Khác</option>
                 </select>
                 <span asp-validation-for="GioiTinh" class="text-danger"></span>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebQuanLiCuaHangBanOto.Models;
 
@@ -12,97 +13,42 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         {
             _context = context;
         }
-        public IActionResult DocBangTaiKhoan( )
-        {
-            
-            return View(_context.Taikhoans.ToList());
-        }
-        public IActionResult Create(Taikhoan tk)
-        {
-            try
-            {
-                _context.Taikhoans.Add(tk);
-                _context.SaveChanges();
-                // Sau khi thêm xong, chuyển hướng về action đọc bảng tài khoản (không return View lỗi nữa)
-                return RedirectToAction(nameof(DocBangTaiKhoan));
-            }
-            catch (DbUpdateException ex)
-            {
-                // Ghi lỗi chi tiết ra Console hoặc Log
-                Console.WriteLine(ex.InnerException?.Message);
-                // Hoặc bạn có thể thêm ModelState error để hiện lỗi lên View
-                ModelState.AddModelError("", "Không thể thêm tài khoản mới: " + ex.InnerException?.Message);
 
-                return View(tk); // Trả lại view cùng dữ liệu tk vừa nhập để người dùng sửa
-            }
+        // READ
+        public IActionResult DocBangTaiKhoan()
+        {
+            var danhSach = _context.Taikhoans.Include(t => t.IdkhNavigation).ToList();
+            return View(danhSach);
         }
 
-
-        // ========== EDIT ==========
+        // CREATE
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Create()
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
-
-            var tk = _context.Taikhoans.Find(id);
-            //if (tk == null)
-            //{
-            //    return NotFound();
-            //}
-            return View(tk);
+            ViewBag.KhachHangList = new SelectList(_context.Thongtins, "Idkh", "HoTen");
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Taikhoan tk)
+        public IActionResult Create(Taikhoan tk)
         {
             if (ModelState.IsValid)
             {
-                _context.Taikhoans.Update(tk);
-                _context.SaveChanges();
-                TempData["Message"] = "Cập nhật thông tin khách hàng thành công!";
-                return RedirectToAction(nameof(DocBangTaiKhoan));
+                try
+                {
+                    _context.Taikhoans.Add(tk);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(DocBangTaiKhoan));
+                }
+                catch (DbUpdateException ex)
+                {
+                    ModelState.AddModelError("", "Lỗi khi lưu vào CSDL: " + ex.InnerException?.Message);
+                }
             }
-            return View(DocBangTaiKhoan);
-        }
 
-        /// detels. 
-
-        // ========== DELETE ==========
-        [HttpGet]
-        public IActionResult Delete(int? id)
-        {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
-
-            var tk = _context.Taikhoans.FirstOrDefault(x => x.Idkh == id);
-            //if (tk == null)
-            //{
-            //    return NotFound();
-            //}
+            ViewBag.KhachHangList = new SelectList(_context.Thongtins, "Idkh", "HoTen", tk.Idkh);
             return View(tk);
         }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            var tk = _context.Taikhoans.Find(id);
-            //if (tk == null)
-            //{
-            //    return NotFound();
-            //}
-
-            _context.Taikhoans.Remove(tk);
-            _context.SaveChanges();
-            TempData["Message"] = "Xóa khách hàng thành công!";
-            return RedirectToAction(nameof(DocBangTaiKhoan));
-        }
-
     }
 }

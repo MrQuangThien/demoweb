@@ -1,155 +1,67 @@
 ﻿@model WebQuanLiCuaHangBanOto.Models.Chitietdonhang
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Thêm Chi Tiết Đơn Hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<!DOCTYPE html>
+<div class="container mt-5">
+    <h4 class="text-center">Thêm Chi Tiết Đơn Hàng</h4>
+    <hr />
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Thêm Chi Tiết Đơn Hàng</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-        }
+        <div class="mb-3">
+            <label asp-for="Idhd" class="form-label">Mã Hóa Đơn</label>
+            <select asp-for="Idhd" class="form-control" asp-items="ViewBag.Hoadons">
+                <option value="">-- Chọn hóa đơn --</option>
+            </select>
+            <span asp-validation-for="Idhd" class="text-danger"></span>
+        </div>
 
-        .container {
-            max-width: 600px;
-            margin-top: 50px;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
+        <div class="mb-3">
+            <label asp-for="Idsp" class="form-label">Sản Phẩm</label>
+            <select asp-for="Idsp" class="form-control" asp-items="ViewBag.Sanphams">
+                <option value="">-- Chọn sản phẩm --</option>
+            </select>
+            <span asp-validation-for="Idsp" class="text-danger"></span>
+        </div>
 
-            .container h4 {
-                color: #495057;
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
+        <div class="mb-3">
+            <label asp-for="DonGia" class="form-label">Đơn Giá</label>
+            <input asp-for="DonGia" type="number" step="0.01" class="form-control" id="DonGia" />
+            <span asp-validation-for="DonGia" class="text-danger"></span>
+        </div>
 
-        .form-label {
-            font-weight: bold;
-            color: #495057;
-        }
+        <div class="mb-3">
+            <label asp-for="SoLuong" class="form-label">Số Lượng</label>
+            <input asp-for="SoLuong" type="number" min="1" class="form-control" id="SoLuong" />
+            <span asp-validation-for="SoLuong" class="text-danger"></span>
+        </div>
 
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+        <div class="mb-3">
+            <label asp-for="ThanhTien" class="form-label">Thành Tiền</label>
+            <input asp-for="ThanhTien" type="number" step="0.01" class="form-control" id="ThanhTien" readonly />
+            <span asp-validation-for="ThanhTien" class="text-danger"></span>
+        </div>
 
-            .btn-primary:hover {
-                background-color: #0056b3;
-            }
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Thêm</button>
+            <a asp-action="DocBangChiTietDonHang" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </form>
+</div>
 
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-            .btn-secondary:hover {
-                background-color: #5a6268;
-            }
-
-        .btn-back {
-            margin-top: 10px;
-        }
-
-        .form-control {
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ced4da;
-        }
-
-            .form-control:focus {
-                border-color: #80bdff;
-                box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-            }
-
-        .text-danger {
-            font-size: 0.875rem;
-            color: #dc3545;
-        }
-
-        .d-flex {
-            justify-content: space-between;
-            align-items: center;
-        }
-
-            .d-flex .btn {
-                margin-top: 10px;
-            }
-    </style>
-</head>
-
-<body>
-
-    <div class="container">
-        <h4 class="text-center">Thêm Chi Tiết Đơn Hàng</h4>
-        <hr />
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="mb-3">
-                <label asp-for="Idctdh" class="form-label"></label>
-                <input asp-for="Idctdh" class="form-control" />
-                <span asp-validation-for="Idctdh" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Idhd" class="form-label"></label>
-                <input asp-for="Idhd" class="form-control" />
-                <span asp-validation-for="Idhd" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Idsp" class="form-label"></label>
-                <input asp-for="Idsp" class="form-control" />
-                <span asp-validation-for="Idsp" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="DonGia" class="form-label"></label>
-                <input asp-for="DonGia" type="number" step="0.01" class="form-control" />
-                <span asp-validation-for="DonGia" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="SoLuong" class="form-label"></label>
-                <input asp-for="SoLuong" type="number" min="1" class="form-control" />
-                <span asp-validation-for="SoLuong" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="ThanhTien" class="form-label"></label>
-                <input asp-for="ThanhTien" type="number" step="0.01" class="form-control" readonly />
-                <span asp-validation-for="ThanhTien" class="text-danger"></span>
-            </div>
-            <div class="d-flex">
-                <input type="submit" value="Thêm" class="btn btn-primary" />
-                <a asp-action="DocBangChiTietDonHang" class="btn btn-secondary btn-back">Quay lại</a>
-            </div>
-        </form>
-    </div>
-
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script>
-        document.getElementById("SoLuong").addEventListener("input", updateTotal);
-        document.getElementById("DonGia").addEventListener("input", updateTotal);
-
         function updateTotal() {
             let donGia = parseFloat(document.getElementById("DonGia").value) || 0;
             let soLuong = parseInt(document.getElementById("SoLuong").value) || 0;
             document.getElementById("ThanhTien").value = (donGia * soLuong).toFixed(2);
         }
-    </script>
 
-</body>
-</html>
+        document.getElementById("DonGia").addEventListener("input", updateTotal);
+        document.getElementById("SoLuong").addEventListener("input", updateTotal);
+    </script>
+}

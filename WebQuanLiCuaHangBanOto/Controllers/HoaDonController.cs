@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebQuanLiCuaHangBanOto.Models;
 
@@ -12,76 +13,108 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         {
             _context = context;
         }
+
+        // ========== READ ==========
         public IActionResult DocBangHoaDon()
         {
-            var danhSach = _context.Hoadons.ToList();
+            var danhSach = _context.Hoadons.Include(h => h.IdkhNavigation).Include(h => h.IdnvNavigation).ToList();
             return View(danhSach);
         }
-
-
-        public IActionResult Create(Hoadon hd)
+        public IActionResult Create()
         {
-            try
+            ViewBag.KhachHangs = new SelectList(_context.Thongtins, "Idkh", "HoTen");
+            ViewBag.NhanViens = new SelectList(_context.Nhanviens, "Idnv", "HoTen");
+            ViewBag.SanPhams = _context.Sanphams
+                .Select(sp => new SelectListItem
+                {
+                    Value = sp.Idsp.ToString(),
+                    Text = $"{sp.TenSp} ({sp.GiaBan} VND)"
+                }).ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Hoadon hd, int Idsp, int SoLuong)
+        {
+            var sp = _context.Sanphams.FirstOrDefault(s => s.Idsp == Idsp);
+            if (sp == null)
             {
+                ModelState.AddModelError("Idsp", "Sản phẩm không tồn tại.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                hd.ThanhTien = sp.GiaBan * SoLuong;
+                hd.SoLuong = SoLuong;
+                hd.NgayMua = DateTime.Now;
+
                 _context.Hoadons.Add(hd);
                 _context.SaveChanges();
-            }
-            catch (DbUpdateException ex)
-            {
-                var innerMessage = ex.InnerException?.Message;
-                Console.WriteLine("Lỗi: " + innerMessage);
-                // Hoặc dùng logger, hoặc ViewBag để debug trên View
+
+                _context.Chitietdonhangs.Add(new Chitietdonhang
+                {
+                    Idhd = hd.Idhd,
+                    Idsp = Idsp,
+                    SoLuong = SoLuong,
+                    DonGia = sp.GiaBan,
+                    ThanhTien = sp.GiaBan * SoLuong
+                });
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(DocBangHoaDon));
             }
 
-        
+            // Re-populate selects if ModelState fails
+            ViewBag.KhachHangs = new SelectList(_context.Thongtins, "Idkh", "HoTen", hd.Idkh);
+            ViewBag.NhanViens = new SelectList(_context.Nhanviens, "Idnv", "HoTen", hd.Idnv);
+            ViewBag.SanPhams = _context.Sanphams
+                .Select(sp => new SelectListItem
+                {
+                    Value = sp.Idsp.ToString(),
+                    Text = $"{sp.TenSp} ({sp.GiaBan} VND)"
+                }).ToList();
+
             return View(hd);
         }
+
+
+        // ========== EDIT ==========
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
+            var hd = _context.Hoadons.Find(id);
+            if (hd == null) return NotFound();
 
-            var hd= _context.Hoadons.Find(id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            ViewBag.KhachHangs = new SelectList(_context.Thongtins, "Idkh", "HoTen", hd.Idkh);
+            ViewBag.NhanViens = new SelectList(_context.Nhanviens, "Idnv", "HoTen", hd.Idnv);
             return View(hd);
-        }   
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Hoadon hd)
         {
-            //if (ModelState.IsValid)
-            //{
-            _context.Hoadons.Update(hd);
-            _context.SaveChanges();
-            TempData["Message"] = "Cập nhật thông tin khách hàng thành công!";
-            return RedirectToAction(nameof(DocBangHoaDon));
-            //}
-            return View(DocBangHoaDon);
+            if (ModelState.IsValid)
+            {
+                _context.Hoadons.Update(hd);
+                _context.SaveChanges();
+                TempData["Message"] = "Cập nhật hóa đơn thành công!";
+                return RedirectToAction(nameof(DocBangHoaDon));
+            }
+            ViewBag.KhachHangs = new SelectList(_context.Thongtins, "Idkh", "HoTen", hd.Idkh);
+            ViewBag.NhanViens = new SelectList(_context.Nhanviens, "Idnv", "HoTen", hd.Idnv);
+            return View(hd);
         }
-
-        /// detels. 
 
         // ========== DELETE ==========
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
-
-            var hd = _context.Hoadons.FirstOrDefault(x => x.Idhd == id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            if (id == null || id <= 0) return BadRequest();
+            var hd = _context.Hoadons.Include(h => h.IdkhNavigation).Include(h => h.IdnvNavigation).FirstOrDefault(x => x.Idhd == id);
+            if (hd == null) return NotFound();
             return View(hd);
         }
 
@@ -90,14 +123,11 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             var hd = _context.Hoadons.Find(id);
-            //if (hd == null)
-            //{
-            //    return NotFound();
-            //}
+            if (hd == null) return NotFound();
 
             _context.Hoadons.Remove(hd);
             _context.SaveChanges();
-            TempData["Message"] = "Xóa khách hàng thành công!";
+            TempData["Message"] = "Xóa hóa đơn thành công!";
             return RedirectToAction(nameof(DocBangHoaDon));
         }
     }

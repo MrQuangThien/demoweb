@@ -12,44 +12,56 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         {
             _context = context;
         }
+
+        // ========== READ ==========
         public IActionResult DocBangNhanVien()
         {
-
-
-            return View(_context.Nhanviens.ToList());
+            var list = _context.Nhanviens.ToList();
+            return View(list);
         }
 
+        // ========== CREATE ==========
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(); // hiển thị form trống
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Nhanvien nv)
         {
-            try
+            if (ModelState.IsValid)
             {
-                _context.Nhanviens.Add(nv);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException ex)
-            {
-                var innerMessage = ex.InnerException?.Message;
-                Console.WriteLine("Lỗi: " + innerMessage);
-                // Hoặc dùng logger, hoặc ViewBag để debug trên View
+                try
+                {
+                    _context.Nhanviens.Add(nv);
+                    _context.SaveChanges();
+
+                    TempData["Message"] = "Thêm nhân viên thành công!";
+                    return RedirectToAction(nameof(DocBangNhanVien)); // ✅ đúng kiểu
+                }
+                catch (DbUpdateException ex)
+                {
+                    var innerMessage = ex.InnerException?.Message;
+                    ModelState.AddModelError("", "Lỗi khi thêm nhân viên: " + innerMessage);
+                }
             }
 
-
-            return View(DocBangNhanVien);
+            return View(nv); // Trả lại view kèm dữ liệu nếu lỗi
         }
+
+        // ========== EDIT ==========
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
+            var nv = _context.Nhanviens.Find(id);
+            if (nv == null)
+                return NotFound();
 
-            var tt = _context.Nhanviens.Find(id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
-            return View(tt);
+            return View(nv);
         }
 
         [HttpPost]
@@ -60,28 +72,26 @@ namespace WebQuanLiCuaHangBanOto.Controllers
             {
                 _context.Nhanviens.Update(nv);
                 _context.SaveChanges();
-                TempData["Message"] = "Cập nhật thông tin khách hàng thành công!";
+
+                TempData["Message"] = "Cập nhật thông tin nhân viên thành công!";
                 return RedirectToAction(nameof(DocBangNhanVien));
             }
-            return View(DocBangNhanVien);
+
+            return View(nv); // ✅ sửa lại: trả đúng model, không phải method
         }
 
-        /// detels. 
-
         // ========== DELETE ==========
+
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
+            if (id == null)
+                return BadRequest();
 
             var nv = _context.Nhanviens.FirstOrDefault(x => x.Idnv == id);
-            //if (nv == null)
-            //{
-            //    return NotFound();
-            //}
+            if (nv == null)
+                return NotFound();
+
             return View(nv);
         }
 
@@ -90,14 +100,13 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             var nv = _context.Nhanviens.Find(id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            if (nv == null)
+                return NotFound();
 
             _context.Nhanviens.Remove(nv);
             _context.SaveChanges();
-            TempData["Message"] = "Xóa khách hàng thành công!";
+
+            TempData["Message"] = "Xóa nhân viên thành công!";
             return RedirectToAction(nameof(DocBangNhanVien));
         }
     }

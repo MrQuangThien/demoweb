@@ -7,50 +7,49 @@ namespace WebQuanLiCuaHangBanOto.Controllers
     public class BaoHanhController : Controller
     {
         private readonly QLCHOTOContext _context;
+
         public BaoHanhController(QLCHOTOContext context)
         {
             _context = context;
         }
 
-
-
+        // ========== READ ==========
         public IActionResult DocBangBaoHanh()
         {
-            return View(_context.Baohanhs.ToList());
+            var list = _context.Baohanhs.Include(b => b.IdspNavigation).ToList();
+            return View(list);
         }
+
+        // ========== CREATE ==========
         [HttpGet]
-        public IActionResult Create(int id)
+        public IActionResult Create()
         {
-            var bh = _context.Baohanhs.Find(id);
-            return View(bh);
+            return View();
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Baohanh bh)
         {
-            _context.Baohanhs.Add(bh);
-            _context.SaveChanges();
-            return View(DocBangBaoHanh);
+            if (ModelState.IsValid)
+            {
+                _context.Baohanhs.Add(bh);
+                _context.SaveChanges();
+                TempData["Message"] = "Thêm bảo hành thành công!";
+                return RedirectToAction(nameof(DocBangBaoHanh));
+            }
 
+            return View(bh);
         }
 
-
-
-
-
-
+        // ========== EDIT ==========
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
-
             var bh = _context.Baohanhs.Find(id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            if (bh == null)
+                return NotFound();
+
             return View(bh);
         }
 
@@ -58,32 +57,28 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Baohanh bh)
         {
-            //if (ModelState.IsValid)
-            //{
-            _context.Baohanhs.Update(bh);
-            _context.SaveChanges();
-            TempData["Message"] = "Cập nhật thông tin khách hàng thành công!";
-            return RedirectToAction(nameof(DocBangBaoHanh));
-            //}
-            return View(DocBangBaoHanh);
-        }
+            if (ModelState.IsValid)
+            {
+                _context.Baohanhs.Update(bh);
+                _context.SaveChanges();
+                TempData["Message"] = "Cập nhật bảo hành thành công!";
+                return RedirectToAction(nameof(DocBangBaoHanh));
+            }
 
-        /// detels. 
+            return View(bh);
+        }
 
         // ========== DELETE ==========
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
+            if (id == null)
+                return BadRequest();
 
             var bh = _context.Baohanhs.FirstOrDefault(x => x.Idbh == id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            if (bh == null)
+                return NotFound();
+
             return View(bh);
         }
 
@@ -92,14 +87,12 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             var bh = _context.Baohanhs.Find(id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            if (bh == null)
+                return NotFound();
 
             _context.Baohanhs.Remove(bh);
             _context.SaveChanges();
-            TempData["Message"] = "Xóa khách hàng thành công!";
+            TempData["Message"] = "Xóa bảo hành thành công!";
             return RedirectToAction(nameof(DocBangBaoHanh));
         }
     }

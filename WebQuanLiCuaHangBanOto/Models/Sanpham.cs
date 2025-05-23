@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebQuanLiCuaHangBanOto.Models;
+
 namespace WebQuanLiCuaHangBanOto.Models;
+
 public partial class Sanpham
 {
     public Sanpham()
@@ -15,8 +15,11 @@ public partial class Sanpham
         Danhgia = new HashSet<Danhgia>();
         ThongkeSlbans = new HashSet<ThongkeSlban>();
     }
-    
+
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Idsp { get; set; }
+
     public string TenSp { get; set; }
     public string HangXe { get; set; }
     public string LoaiXe { get; set; }
@@ -24,18 +27,16 @@ public partial class Sanpham
     public DateTime? NgaySanXuat { get; set; }
     public int SoLuong { get; set; }
 
-    // Thêm thuộc tính ảnh dạng byte[]
     public byte[]? HinhAnh { get; set; }
 
-    // Thuộc tính hỗ trợ hiển thị ảnh base64 (không map vào DB)
-    [NotMapped]
-    public string? HinhAnhBase64 { get; set; }
-
-    // Thuộc tính dùng để upload ảnh (không map vào DB)
     [NotMapped]
     public IFormFile? HinhAnhUpload { get; set; }
 
-    // Navigation properties
+    [NotMapped]
+
+    public string? HinhAnhBase64
+    => HinhAnh != null ? $"data:image/png;base64,{Convert.ToBase64String(HinhAnh)}" : null;
+
     public virtual ICollection<Baohanh> Baohanhs { get; set; }
     public virtual ICollection<Chitietdonhang> Chitietdonhangs { get; set; }
     public virtual ICollection<Danhgia> Danhgia { get; set; }

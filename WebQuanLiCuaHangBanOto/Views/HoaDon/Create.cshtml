@@ -1,144 +1,86 @@
 ﻿@model WebQuanLiCuaHangBanOto.Models.Hoadon
-
 @{
-    Layout = null;
+    ViewData["Title"] = "Thêm hóa đơn mới";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<!DOCTYPE html>
+<div class="container mt-4">
+    <h2 class="text-center text-primary mb-4">@ViewData["Title"]</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
-        }
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        a {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-            a:hover {
-                text-decoration: underline;
-            }
-
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: auto;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input.form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: border-color 0.3s;
-        }
-
-            input.form-control:focus {
-                border-color: #007bff;
-                outline: none;
-                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-
-            .btn-primary:hover {
-                background-color: #0056b3;
-            }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-
-    <h4 style="text-align: center;">Thêm Hóa Đơn</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group">
-                    <label asp-for="Idhd" class="control-label"></label>
-                    <input asp-for="Idhd" class="form-control" />
-                    <span asp-validation-for="Idhd" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Idkh" class="control-label"></label>
-                    <input asp-for="Idkh" class="form-control" />
-                    <span asp-validation-for="Idkh" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Idnv" class="control-label"></label>
-                    <input asp-for="Idnv" class="form-control" />
-                    <span asp-validation-for="Idnv" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input asp-for="NgayMua" class="form-control" type="date"
-                           value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-
-                    <span asp-validation-for="NgayMua" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="ThanhTien" class="control-label"></label>
-                    <input asp-for="ThanhTien" class="form-control" />
-                    <span asp-validation-for="ThanhTien" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="SoLuong" class="control-label"></label>
-                    <input asp-for="SoLuong" class="form-control" />
-                    <span asp-validation-for="SoLuong" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Thêm hóa đơn" class="btn btn-primary" />
-                </div>
-            </form>
+        <!-- Khách hàng -->
+        <div class="form-group mb-3">
+            <label asp-for="Idkh" class="form-label">Khách hàng</label>
+            <select asp-for="Idkh" class="form-control" asp-items="ViewBag.KhachHangs">
+                <option value="">-- Chọn khách hàng --</option>
+            </select>
+            <span asp-validation-for="Idkh" class="text-danger"></span>
         </div>
-    </div>
 
-    <div>
-        <a asp-action="DocBangHoaDon" class="back-link">Quay lại danh sách</a>
-    </div>
+        <!-- Nhân viên -->
+        <div class="form-group mb-3">
+            <label asp-for="Idnv" class="form-label">Nhân viên</label>
+            <select asp-for="Idnv" class="form-control" asp-items="ViewBag.NhanViens">
+                <option value="">-- Chọn nhân viên --</option>
+            </select>
+            <span asp-validation-for="Idnv" class="text-danger"></span>
+        </div>
 
-</body>
-</html>
+        <!-- Ngày mua -->
+        <div class="form-group mb-3">
+            <label asp-for="NgayMua" class="form-label">Ngày mua</label>
+            <input asp-for="NgayMua" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="NgayMua" class="text-danger"></span>
+        </div>
+
+        <!-- Sản phẩm -->
+        <div class="form-group mb-3">
+            <label class="form-label">Sản phẩm</label>
+            <select id="SanPhamSelect" name="Idsp" class="form-control">
+                <option value="" data-price="0">-- Chọn sản phẩm --</option>
+                @foreach (var item in ViewBag.SanPhams as List<SelectListItem>)
+                {
+                    <option value="@item.Value" data-price="@item.Text">@item.Text</option>
+                }
+            </select>
+        </div>
+
+        <!-- Số lượng -->
+        <div class="form-group mb-3">
+            <label class="form-label">Số lượng</label>
+            <input type="number" name="SoLuong" id="SoLuong" min="1" value="1" class="form-control" />
+        </div>
+
+        <!-- Thành tiền -->
+        <div class="form-group mb-3">
+            <label asp-for="ThanhTien" class="form-label">Thành tiền</label>
+            <input asp-for="ThanhTien" class="form-control" id="ThanhTien" readonly />
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Lưu hóa đơn</button>
+            <a asp-action="DocBangHoaDon" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const spSelect = document.getElementById("SanPhamSelect");
+        const slInput = document.getElementById("SoLuong");
+        const thanhTienInput = document.getElementById("ThanhTien");
+
+        function updateTotal() {
+            const selected = spSelect.options[spSelect.selectedIndex];
+            const donGia = parseFloat(selected.dataset.price) || 0;
+            const soLuong = parseInt(slInput.value) || 0;
+            thanhTienInput.value = (donGia * soLuong).toFixed(2);
+        }
+
+        spSelect.addEventListener("change", updateTotal);
+        slInput.addEventListener("input", updateTotal);
+    </script>
+}

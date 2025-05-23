@@ -1,46 +1,32 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebQuanLiCuaHangBanOto.Models;
 
-public class SanPhamControllers : Controller
+public class SanPhamController : Controller
 {
     private readonly QLCHOTOContext _context;
     private readonly IWebHostEnvironment _env;
 
-    public SanPhamControllers(QLCHOTOContext db, IWebHostEnvironment env)
+    public SanPhamController(QLCHOTOContext context, IWebHostEnvironment env)
     {
-        _context = db;
+        _context = context;
         _env = env;
     }
 
-    // ========== READ (List Products) ==========
+    // ========== READ ==========
     public async Task<IActionResult> Docbangsanpham()
     {
         var list = await _context.Sanphams.ToListAsync();
+        return View(list); // KHÔNG cần gán HinhAnhBase64
+    }
 
-        // Chuyển đổi byte[] ảnh sang Base64 string cho mỗi item
-        foreach (var sp in list)
-        {
-            if (sp.HinhAnh != null && sp.HinhAnh.Length > 0)
-            {
-                sp.HinhAnhBase64 = $"data:image/png;base64,{Convert.ToBase64String(sp.HinhAnh)}";
-            }
-            else
-            {
-                sp.HinhAnhBase64 = null; // Hoặc ảnh mặc định
-            }
-        }
-
-        return View(list);
-    
-}
-// ========== CREATE ==========
-[HttpGet]
+    // ========== CREATE ==========
+    [HttpGet]
     public IActionResult Create()
     {
         return View();
@@ -52,15 +38,14 @@ public class SanPhamControllers : Controller
     {
         if (ModelState.IsValid)
         {
-            if (sanpham.HinhAnhUpload != null && sanpham.HinhAnhUpload.Length > 0)
+            if (sanpham.HinhAnhUpload?.Length > 0)
             {
                 using var ms = new MemoryStream();
                 await sanpham.HinhAnhUpload.CopyToAsync(ms);
                 sanpham.HinhAnh = ms.ToArray();
-                sanpham.HinhAnhBase64 = "data:image/png;base64," + Convert.ToBase64String(sanpham.HinhAnh);
             }
 
-            _context.Add(sanpham);
+            _context.Sanphams.Add(sanpham);
             await _context.SaveChangesAsync();
 
             TempData["Message"] = "Thêm sản phẩm thành công!";
@@ -77,11 +62,6 @@ public class SanPhamControllers : Controller
         var sp = await _context.Sanphams.FindAsync(id);
         if (sp == null) return NotFound();
 
-        if (sp.HinhAnh != null && sp.HinhAnh.Length > 0)
-        {
-            sp.HinhAnhBase64 = "data:image/png;base64," + Convert.ToBase64String(sp.HinhAnh);
-        }
-
         return View(sp);
     }
 
@@ -89,22 +69,18 @@ public class SanPhamControllers : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Sanpham model, IFormFile? file)
     {
-        if (id != model.Idsp)
-            return NotFound();
+        if (id != model.Idsp) return NotFound();
 
         var sanPham = await _context.Sanphams.FindAsync(id);
-        if (sanPham == null)
-            return NotFound();
+        if (sanPham == null) return NotFound();
 
-        if (file != null && file.Length > 0)
+        if (file?.Length > 0)
         {
-            using var memoryStream = new MemoryStream();
-            await file.CopyToAsync(memoryStream);
-            sanPham.HinhAnh = memoryStream.ToArray();
-            sanPham.HinhAnhBase64 = "data:image/png;base64," + Convert.ToBase64String(sanPham.HinhAnh);
+            using var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+            sanPham.HinhAnh = ms.ToArray();
         }
 
-        // Cập nhật các trường còn lại
         sanPham.TenSp = model.TenSp;
         sanPham.NgaySanXuat = model.NgaySanXuat;
         sanPham.LoaiXe = model.LoaiXe;
@@ -128,12 +104,10 @@ public class SanPhamControllers : Controller
     [HttpGet]
     public IActionResult Delete(int? id)
     {
-        if (id == null || id <= 0)
-            return BadRequest();
+        if (id == null || id <= 0) return BadRequest();
 
         var sp = _context.Sanphams.FirstOrDefault(x => x.Idsp == id);
-        if (sp == null)
-            return NotFound();
+        if (sp == null) return NotFound();
 
         return View(sp);
     }
@@ -143,10 +117,8 @@ public class SanPhamControllers : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var sanpham = await _context.Sanphams.FindAsync(id);
-        if (sanpham == null)
-            return NotFound();
+        if (sanpham == null) return NotFound();
 
-        // Xóa dữ liệu liên quan trước khi xóa sản phẩm
         _context.Chitietdonhangs.RemoveRange(_context.Chitietdonhangs.Where(c => c.Idsp == id));
         _context.Danhgia.RemoveRange(_context.Danhgia.Where(d => d.Idsp == id));
         _context.Baohanhs.RemoveRange(_context.Baohanhs.Where(b => b.Idsp == id));

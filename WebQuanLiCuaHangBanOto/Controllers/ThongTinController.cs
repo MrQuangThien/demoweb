@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebQuanLiCuaHangBanOto.Models;
@@ -17,7 +18,6 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         // ========== HIỂN THỊ DANH SÁCH KHÁCH HÀNG ==========
         public IActionResult DocBangThongTin()
         {
-
             return View(_context.Thongtins.ToList());
         }
 
@@ -25,49 +25,46 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(); // Bắt buộc phải có để hiển thị form tạo mới
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Thongtin tt)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine("Model error: " + error);
+                }
+                return View(tt);
+            }
+
             try
-            { _context.Thongtins.Add(tt);
-            _context.SaveChanges();
-                
+            {
+                _context.Thongtins.Add(tt);
+                _context.SaveChanges();
+                TempData["Message"] = "Thêm khách hàng thành công!";
+                return RedirectToAction(nameof(DocBangThongTin));
             }
             catch (DbUpdateException ex)
             {
-                var innerMessage = ex.InnerException?.Message;
-                Console.WriteLine("Lỗi: " + innerMessage);
-                // Hoặc dùng logger, hoặc ViewBag để debug trên View
+                Console.WriteLine("DB Exception: " + ex.InnerException?.Message);
+                ModelState.AddModelError("", "Lỗi lưu dữ liệu: " + ex.InnerException?.Message);
+                return View(tt);
             }
-
-            _context.Thongtins.Add(tt);
-            _context.SaveChanges();
-            TempData["Message"] = "Tạo mới thông tin khách hàng thành công!";
-            return RedirectToAction(nameof(DocBangThongTin));
-            //}
-            return View(DocBangThongTin);
         }
 
         // ========== EDIT ==========
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
-
             var tt = _context.Thongtins.Find(id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            if (tt == null)
+                return NotFound();
+
             return View(tt);
         }
 
@@ -75,32 +72,26 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Thongtin tt)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (!ModelState.IsValid)
+                return View(tt);
+
             _context.Thongtins.Update(tt);
             _context.SaveChanges();
             TempData["Message"] = "Cập nhật thông tin khách hàng thành công!";
             return RedirectToAction(nameof(DocBangThongTin));
-            //}
-            return View(DocBangThongTin);
         }
-
-        /// detels. 
 
         // ========== DELETE ==========
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            //if (id == null || id <= 0)
-            //{
-            //    return BadRequest();
-            //}
+            if (id == null)
+                return BadRequest();
 
             var tt = _context.Thongtins.FirstOrDefault(x => x.Idkh == id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            if (tt == null)
+                return NotFound();
+
             return View(tt);
         }
 
@@ -109,10 +100,8 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             var tt = _context.Thongtins.Find(id);
-            //if (tt == null)
-            //{
-            //    return NotFound();
-            //}
+            if (tt == null)
+                return NotFound();
 
             _context.Thongtins.Remove(tt);
             _context.SaveChanges();
