@@ -132,7 +132,7 @@ public class LoginController : Controller
             if (user.Role == "admin")
                 return RedirectToAction("viewadmin", "Home");
             else
-                return RedirectToAction("viewindex", "Home");
+                return RedirectToAction("index", "Home");
         }
         else
         {
