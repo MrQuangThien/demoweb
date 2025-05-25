@@ -54,6 +54,9 @@
                 <span>Chưa có tài khoản?</span><br />
                 <a class="btn btn-outline-secondary btn-sm mt-2" asp-action="Register" asp-controller="Login">Đăng ký</a>
             </div>
+            <div class="form-group mt-2 text-end">
+                <a asp-action="ForgotPassword" asp-controller="Login" class="text-decoration-none">Quên mật khẩu?</a>
+            </div>
 
             @if (!ViewData.ModelState.IsValid)
             {

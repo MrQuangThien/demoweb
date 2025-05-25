@@ -22,6 +22,9 @@ public partial class Taikhoan
 
     [Required(ErrorMessage = "Vui lòng chọn vai trò")]
     public string Role { get; set; }
+    public string? ResetToken { get; set; }
+    public DateTime? TokenExpiry { get; set; }
+
 
     [ForeignKey("Idkh")]
     public virtual Thongtin? IdkhNavigation { get; set; } // <- sửa lại nullable

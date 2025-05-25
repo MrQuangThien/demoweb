@@ -64,20 +64,19 @@ public class SanPhamController : Controller
 
         return View(sp);
     }
-
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Sanpham model, IFormFile? file)
+    public async Task<IActionResult> Edit(int id, Sanpham model)
     {
         if (id != model.Idsp) return NotFound();
 
         var sanPham = await _context.Sanphams.FindAsync(id);
         if (sanPham == null) return NotFound();
 
-        if (file?.Length > 0)
+        if (model.HinhAnhUpload?.Length > 0)
         {
             using var ms = new MemoryStream();
-            await file.CopyToAsync(ms);
+            await model.HinhAnhUpload.CopyToAsync(ms);
             sanPham.HinhAnh = ms.ToArray();
         }
 
@@ -92,13 +91,13 @@ public class SanPhamController : Controller
         {
             _context.Update(sanPham);
             await _context.SaveChangesAsync();
-
             TempData["Message"] = "Cập nhật sản phẩm thành công!";
             return RedirectToAction(nameof(Docbangsanpham));
         }
 
         return View(sanPham);
     }
+
 
     // ========== DELETE ==========
     [HttpGet]
@@ -111,7 +110,6 @@ public class SanPhamController : Controller
 
         return View(sp);
     }
-
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
@@ -130,4 +128,6 @@ public class SanPhamController : Controller
         TempData["Message"] = "Xóa sản phẩm thành công!";
         return RedirectToAction(nameof(Docbangsanpham));
     }
+
+
 }

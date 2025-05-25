@@ -16,10 +16,23 @@ namespace WebQuanLiCuaHangBanOto.Controllers
         }
 
         // ========== HIỂN THỊ DANH SÁCH KHÁCH HÀNG ==========
-        public IActionResult DocBangThongTin()
+        public async Task<IActionResult> DocBangThongTin(string searchString)
         {
-            return View(_context.Thongtins.ToList());
+            var query = _context.Thongtins.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(t =>
+                    t.HoTen.Contains(searchString) ||
+                    t.Sdt.Contains(searchString) ||
+                    t.DiaChi.Contains(searchString));
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            var result = await query.ToListAsync(); // ✅ đúng chỗ cần await
+            return View(result);
         }
+
 
         // ========== CREATE ==========
         [HttpGet]

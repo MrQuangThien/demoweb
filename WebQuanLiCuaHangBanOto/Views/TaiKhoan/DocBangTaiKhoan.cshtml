@@ -1,110 +1,115 @@
 ﻿@model IEnumerable<WebQuanLiCuaHangBanOto.Models.Taikhoan>
 
-
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["Title"] = "Trang quản trị";
+    ViewData["Title"] = "Quản lý tài khoản";
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>DocBangTaiKhoan</title>
+    <title>Quản lý tài khoản</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
         }
 
         .table {
             width: 100%;
             border-collapse: collapse;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
             .table th, .table td {
-                border: 1px solid #ddd;
-                padding: 12px;
+                padding: 14px;
                 text-align: center;
+                border-bottom: 1px solid #ddd;
             }
 
             .table th {
-                background-color: #4CAF50;
+                background-color: #007bff;
                 color: white;
+                font-weight: 600;
             }
 
-        a {
-            text-decoration: none;
+            .table tr:hover {
+                background-color: #f1f1f1;
+            }
+
+        .actions a {
+            margin: 0 4px;
             color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
         }
 
-            a:hover {
+            .actions a:hover {
                 text-decoration: underline;
             }
-    </style>
 
+        .btn-create {
+            display: inline-block;
+            padding: 10px 16px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+            .btn-create:hover {
+                background-color: #218838;
+            }
+    </style>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Idtk)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Idkh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TenTk)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MatKhau)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Idtk)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Idkh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenTk)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MatKhau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Idtk }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Idtk }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Idtk })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <h2>Danh sách tài khoản</h2>
+
+    <a class="btn-create" asp-action="Create">➕ Thêm tài khoản mới</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Idtk)</th>
+                <th>@Html.DisplayNameFor(model => model.Idkh)</th>
+                <th>@Html.DisplayNameFor(model => model.TenTk)</th>
+                <th>Mật khẩu</th> <!-- Ẩn chi tiết mật khẩu -->
+                <th>@Html.DisplayNameFor(model => model.Gmail)</th>
+                <th>@Html.DisplayNameFor(model => model.Role)</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Idtk</td>
+                    <td>@item.Idkh</td>
+                    <td>@item.TenTk</td>
+                    <td>🔒 Đã mã hoá</td>
+                    <td>@item.Gmail</td>
+                    <td>@item.Role</td>
+                    <td class="actions">
+                        @Html.ActionLink("🖊️ Sửa", "Edit", new { id = item.Idtk }) |
+                        @Html.ActionLink("🔍 Xem", "Details", new { id = item.Idtk }) |
+                        @Html.ActionLink("🗑️ Xoá", "Delete", new { id = item.Idtk })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </body>
 </html>

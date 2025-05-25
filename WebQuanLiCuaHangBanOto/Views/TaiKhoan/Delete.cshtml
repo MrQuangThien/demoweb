@@ -1,0 +1,51 @@
+﻿@model WebQuanLiCuaHangBanOto.Models.Taikhoan
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Xóa tài khoản</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h3 class="text-danger text-center mb-4">Bạn có chắc chắn muốn xóa tài khoản này?</h3>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-primary mb-3">Thông tin tài khoản</h5>
+                <dl class="row">
+                    <dt class="col-sm-3">ID</dt>
+                    <dd class="col-sm-9">@Model.Idtk</dd>
+
+                    <dt class="col-sm-3">ID Khách hàng</dt>
+                    <dd class="col-sm-9">@Model.Idkh</dd>
+
+                    <dt class="col-sm-3">Tên tài khoản</dt>
+                    <dd class="col-sm-9">@Model.TenTk</dd>
+
+                    <dt class="col-sm-3">Gmail</dt>
+                    <dd class="col-sm-9">@Model.Gmail</dd>
+
+                    <dt class="col-sm-3">Vai trò</dt>
+                    <dd class="col-sm-9">@Model.Role</dd>
+
+                    @* Không hiển thị mật khẩu để bảo mật *@
+                </dl>
+
+                <form asp-action="Delete" method="post" class="mt-4">
+                    <input type="hidden" asp-for="Idtk" />
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                        <a asp-action="DocBangTaiKhoan" class="btn btn-secondary">Quay lại</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
