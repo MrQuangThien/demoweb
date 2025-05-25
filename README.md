@@ -1,6 +1,4 @@
-﻿@{
-    Layout = null;
-}
+
 
 
 <!DOCTYPE html>
